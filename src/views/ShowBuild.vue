@@ -15,7 +15,7 @@
             <section class="bg-cover p-1" :style="{ backgroundImage: 'url(' + bgElementImg() + ')'}">
                 <div class="flex flex-nowrap " >
                             <div class="flex flex-nowrap ">
-                                <div class="card rounded-none w-[414px] h-[550px]" style="">
+                                <div class="card rounded-none w-[414px] max-h-[550px]" style="">
                                     <figure class="">
                                         <img :src="`https://upload-os-bbs.mihoyo.com/game_record/genshin/character_image/${build.character.avatar}.png`" >
                                     </figure> 
@@ -24,9 +24,9 @@
                                     <h1 class="text-lg text-white font-bold absolute right-0 " >{{build.nickname}}</h1>
                                     <h1 class="text-md text-white  absolute right-0 top-6" >{{build.uid}}</h1>
                                     <h1 class="text-lg text-white font-bold absolute left-3 whitespace-nowrap">{{build.character.name}} - {{build.status}}</h1>
-                                    <h1 class="text-md text-white absolute left-3 top-6 " >Level {{build.level}}/{{(build.ascendsion * 10) + (build.ascendsion>0?10:0) + 20}}</h1> 
-                                    <div class="flex items-center space-x-1 absolute left-3 top-12">
-                                        <img src="/src/assets/images/svg/Friendship.svg" class="w-6 h-6">
+                                    <h1 class="text-md text-white absolute left-3 top-6 whitespace-nowrap" >Level {{build.level}}/{{(build.ascendsion * 10) + (build.ascendsion>0?10:0) + 20}}</h1> 
+                                    <div class="flex items-center space-x-1 absolute left-3 top-12 whitespace-nowrap" v-if="build.friendship">
+                                        <img src="/images/svg/Friendship.svg" class="w-6 h-6">
                                         <h1 class="text-md text-white">{{build.friendship}}</h1>
                                     </div>
                                 </div>
@@ -169,17 +169,24 @@ import { defineComponent, defineProps, ref, computed,} from 'vue';
         }))
     );
     function exportNewImg(){
+        
         isLoading.value = true
         setTimeout(() => {
-            isLoading.value = false
-            var node = document.getElementById("newLayout");
+        isLoading.value = false
+        var node = document.getElementById("newLayout");
+        var options = {
+            quality: 0.99,
+            height: node.clientHeight,
+        };
         var node1 = document.getElementById("canvasNew");
+
         domtoimage
-        .toPng(node)
+        .toPng(node, options)
         .then(function (dataUrl) {
             var img = new Image();
             img.src = dataUrl;
             node1.appendChild(img);
+            
         })
         .catch(function (error) {
             console.error("oops, something went wrong!", error);
@@ -189,19 +196,19 @@ import { defineComponent, defineProps, ref, computed,} from 'vue';
     function bgElementImg(){
     const ele = Element.value;
         if(ele == "Ice"){
-            return "/src/assets/images/element/bgCryo.jpg"
+            return "/images/element/bgCryo.jpg"
         } else if(ele == "Rock"){
-            return "/src/assets/images/element/bgGeo.jpg"
+            return "/images/element/bgGeo.jpg"
         } else if(ele == "Dendro"){
-            return "/src/assets/images/element/bgDendro.jpg"
+            return "/images/element/bgDendro.jpg"
         } else if(ele == "Wind"){
-            return "/src/assets/images/element/bgAnemo.jpg"
+            return "/images/element/bgAnemo.jpg"
         } else if(ele == "Electric"){
-            return "/src/assets/images/element/bgElectro.jpg"
+            return "/images/element/bgElectro.jpg"
         } else if(ele == "Water"){
-            return "/src/assets/images/element/bgHydro.jpg"
+            return "/images/element/bgHydro.jpg"
         } else if(ele == "Fire"){
-            return "/src/assets/images/element/bgPyro.jpg"
+            return "/images/element/bgPyro.jpg"
         } 
     }
     

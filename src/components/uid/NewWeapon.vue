@@ -32,27 +32,24 @@
                     </div>
                 </div>
             </div>
-            <div class="flex">
-                <div class="w-[60px]">
-                    <pre>Level </pre>
-                    <pre>{{sessionData.equipList[5].weapon.level}}/{{(sessionData.equipList[5].weapon.promoteLevel * 10) + (sessionData.equipList[5].weapon.promoteLevel>0?10:0) + 20}}</pre>
-                    <div v-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 0"><pre class="badge">R1</pre></div>
-                    <div v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 1"><pre class="badge">R2</pre></div>
-                    <div v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 2"><pre class="badge">R3</pre></div>
-                    <div v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 3"><pre class="badge">R4</pre></div>
-                    <div v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 4"><pre class="badge">R5</pre></div>
+            <div class="flex flex-col">
+                    <h1>Base ATK {{sessionData.equipList[5].flat.weaponStats[0].statValue}}</h1> 
+                    <h1 v-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_ATTACK_PERCENT'" >ATK {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_HP_PERCENT'" >HP {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_DEFENSE_PERCENT'" >DEF {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CRITICAL'" >CRIT RATE {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CRITICAL_HURT'" >CRIT DMG {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_ELEMENT_MASTERY'" >Elemental Mastery {{sessionData.equipList[5].flat.weaponStats[1].statValue}}</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CHARGE_EFFICIENCY'" >Energy Recharge {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
+                    <h1 v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_PHYSICAL_ADD_HURT'" >Physical DMG {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</h1>
                 </div>
-                <div class="box">
-                        <pre>Base ATK {{sessionData.equipList[5].flat.weaponStats[0].statValue}}</pre> 
-                    <pre v-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_ATTACK_PERCENT'" >ATK {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_HP_PERCENT'" >HP {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_DEFENSE_PERCENT'" >DEF {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CRITICAL'" >CRIT RATE {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CRITICAL_HURT'" >CRIT DMG {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_ELEMENT_MASTERY'" >Elemental Mastery {{sessionData.equipList[5].flat.weaponStats[1].statValue}}</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_CHARGE_EFFICIENCY'" >Energy Recharge {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                    <pre v-else-if="sessionData.equipList[5].flat.weaponStats[1].appendPropId == 'FIGHT_PROP_PHYSICAL_ADD_HURT'" >Physical DMG {{sessionData.equipList[5].flat.weaponStats[1].statValue}}%</pre>
-                </div>
+            <div class="flex space-x-2">
+                    <h1>Lv. {{sessionData.equipList[5].weapon.level}}</h1>
+                    <span v-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 0">R1</span>
+                    <span v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 1">R2</span>
+                    <span v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 2">R3</span>
+                    <span v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 3">R4</span>
+                    <span v-else-if="Object.values(sessionData.equipList[5].weapon.affixMap) == 4">R5</span>
             </div>
         </div>
     </div>

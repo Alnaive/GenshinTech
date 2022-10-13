@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[440px] h-[120px] card-side flex items-center space-x-4 p-2">
+    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[460px] md:w-[440px] h-[120px] card-side flex items-center space-x-4 p-2">
         <figure class="relative">
         <img class="w-24 h-24"  v-if="build.equipList[5].weapon.promoteLevel > 1" :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${build.equipList[5].flat.icon}_Awaken.png`" alt="" srcset="">
         <img class="w-24 h-24"  v-else :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${build.equipList[5].flat.icon}.png`" alt="" srcset="">

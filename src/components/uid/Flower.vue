@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[440px] h-[105px] card-side flex items-center space-x-4 p-2">
+    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[460px] md:w-[440px] h-[105px] card-side flex items-center space-x-4 p-2">
         <figure class="relative">
         <img class="w-24 h-24" :src="`https://upload-os-bbs.mihoyo.com/game_record/genshin/equip/${sessionData.equipList[0].flat.icon}.png`" alt="" srcset="">
         <div v-if="sessionData.equipList[0].flat.rankLevel == 5" class="absolute inset-x-0 bottom-[-35px] flex flex-row items-center">
@@ -17,7 +17,7 @@
         </div>
         </figure>
         <div class="divider divider-horizontal w-0"></div>
-        <div class="w-[95px]">
+        <div class="flex flex-col w-[95px]">
             <h1 class="font-bold">HP</h1>
             <pre class="text-xl">{{sessionData.equipList[0].flat.reliquaryMainstat.statValue}}</pre> 
             <span class="badge"><pre>+{{sessionData.equipList[0].reliquary.level - 1}}</pre></span> 

@@ -7,7 +7,7 @@
                 <div class="indicator">
                     <span class="indicator-item font-bold indicator-bottom indicator-center badge  badge-black mb-[-8px]">{{skillLv}}</span>
                     <div class=" place-items-center">
-                        <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                        <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                         <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                                 </span>
                                 <span v-else class="indicator-item font-bold indicator-bottom indicator-center badge  badge-black mb-[-8px]">{{skillLv}}</span> 
                                 <div v-if="iconKey == skillKey" class=" place-items-center">
-                                    <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                                    <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                                     <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                                 </div>
                             </div>
@@ -48,14 +48,14 @@
                                         <span v-if="proudVal != 3331" class="indicator-item font-bold indicator-bottom indicator-center badge  badge-black mb-[-8px]">{{skillLv}}</span>
                                         <span v-else class="indicator-item font-bold indicator-bottom indicator-center badge  badge-black mb-[-8px]">{{skillLv + sessionData.proudSkillExtraLevelMap[conT]}}</span>
                                         <div class=" place-items-center">
-                                            <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                                            <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                                             <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                                         </div>
                                     </div>
                                     <div class="indicator" v-if="skillKey == iconKey && skillKey == charData.SkillOrder[1]" >
                                      <span class="indicator-item font-bold indicator-bottom indicator-center badge badge-info mb-[-8px]">{{skillLv + sessionData.proudSkillExtraLevelMap[conS]}}</span>
                                         <div class=" place-items-center">
-                                            <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                                            <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                                             <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                     <span v-if="skillKey == 10333" class="indicator-item font-bold indicator-bottom indicator-center badge badge-info mb-[-8px]">{{skillLv}}</span>
                                     <span v-else class="indicator-item font-bold indicator-bottom indicator-center badge badge-info mb-[-8px]">{{skillLv + sessionData.proudSkillExtraLevelMap[conS]}}</span>
                                         <div class=" place-items-center">
-                                            <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                                            <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                                             <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                 <span v-else-if="skillKey == charData.SkillOrder[1]" class="indicator-item font-bold indicator-bottom indicator-center badge  badge-info mb-[-8px]">{{skillLv + sessionData.proudSkillExtraLevelMap[conT]}}</span>
                                 <span v-else-if="skillKey == charData.SkillOrder[2]" class="indicator-item font-bold indicator-bottom indicator-center badge  badge-info mb-[-8px]">{{skillLv + sessionData.proudSkillExtraLevelMap[conS]}}</span>
                                 <div v-if="iconKey == skillKey" class=" place-items-center">
-                                    <img  class="w-[60px] h-[40px]" src="/src/assets/images/attribute/talentBorder.png" alt="" srcset="">
+                                    <img  class="w-[60px] h-[40px]" src="/images/attribute/talentBorder.png" alt="" srcset="">
                                     <img  class="w-10 h-10 ml-[10px] mt-[-40px]" :src=" `https://res.cloudinary.com/genshin/image/upload/sprites/${icon}.png`" >
                                 </div>
                             </div>

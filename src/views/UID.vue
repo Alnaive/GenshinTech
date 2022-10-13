@@ -54,19 +54,19 @@
                 localStorage.setItem('characters', JSON.stringify(this.character));
             },
             bg5(){
-                return "/src/assets/images/rarity/Background_Item_5_Star.png"
+                return "/images/rarity/Background_Item_5_Star.png"
             },
             bg4(){
-                return "/src/assets/images/rarity/Background_Item_4_Star.png"
+                return "/images/rarity/Background_Item_4_Star.png"
             },
              bg3(){
-                return "/src/assets/images/rarity/Background_Item_3_Star.png"
+                return "/images/rarity/Background_Item_3_Star.png"
             },
             bg2(){
-                return "/src/assets/images/rarity/Background_Item_2_Star.png"
+                return "/images/rarity/Background_Item_2_Star.png"
             },
             bg1(){
-                return "/src/assets/images/rarity/Background_Item_1_Star.png"
+                return "/images/rarity/Background_Item_1_Star.png"
             },
         },
        async mounted() {
@@ -247,86 +247,86 @@
                     <div class="bg-transparent" >
                         <section class="px-2 py-2 text-white" >
                             <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Health.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Health.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Max Hp</strong>
                                     <strong class="mr-2 "> <span >{{ data.fightPropMap[2000].toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}) }}</span> <br>
                                     </strong>
                                 </div> 
                                 <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Attack.png"  class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Attack.png"  class="w-8 h-8">
                                     <strong class="flex-1 w-64">Attack</strong>
                                     <strong class="mr-2 "> <span >{{ data.fightPropMap[2001].toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}) }}</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Defense.png"  class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Defense.png"  class="w-8 h-8">
                                     <strong class="flex-1 w-64">Defense</strong>
                                     <strong class="mr-2 "> <span >{{ data.fightPropMap[2002].toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}) }}</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Elemental_Mastery.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Elemental_Mastery.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Elemental Mastery</strong>
                                     <strong class="mr-2 "> <span >{{ data.fightPropMap[28].toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}) }}</span> <br>
                                     </strong>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Critical_Hit.png" class="w-[23px] h-[21px] ml-[8px]">
+                                    <img src="/images/attribute/Icon_Attribute_Critical_Hit.png" class="w-[23px] h-[21px] ml-[8px]">
                                     <strong class="flex-1 w-64 ">Critical Rate</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[20] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                     <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Critical_Damage.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Critical_Damage.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Critical Damage</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[22] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Energy_Recharge.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Energy_Recharge.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Energy Recharge</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[23] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Water' && data.fightPropMap[42] > 0">
-                                    <img src="/src/assets/images/attribute/Hydro.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Hydro.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Hydro DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[42] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Wind' && data.fightPropMap[44] > 0">
-                                    <img src="/src/assets/images/attribute/Anemo.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Anemo.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Anemo DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[44] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div> 
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Fire' && data.fightPropMap[40] > 0">
-                                    <img src="/src/assets/images/attribute/Pyro.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Pyro.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Pyro DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[40] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Ice' && data.fightPropMap[46] > 0">
-                                    <img src="/src/assets/images/attribute/Cryo.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Cryo.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Cryo DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[46] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Electric' && data.fightPropMap[41] > 0">
-                                    <img src="/src/assets/images/attribute/Electro.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Electro.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Electro DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[41] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="char.Element == 'Rock' && data.fightPropMap[45] > 0">
-                                    <img src="/src/assets/images/attribute/Geo.png" class="w-8 h-8">
+                                    <img src="/images/attribute/Geo.png" class="w-8 h-8">
                                     <strong class="flex-1 w-64">Geo DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[45] * 100).toFixed(1) }}%</span> <br>
                                     </strong>
                                 </div>
                                 <div class="flex items-center gap-2" v-if="data.fightPropMap[30] > 0">
-                                    <img src="/src/assets/images/attribute/Icon_Attribute_Physical2.png"  class="w-8 h-8">
+                                    <img src="/images/attribute/Icon_Attribute_Physical2.png"  class="w-8 h-8">
                                     <strong class="flex-1 w-64">Physical DMG Bonus</strong>
                                     <strong class="mr-2 "> <span >{{ parseFloat(data.fightPropMap[30] * 100).toFixed(1) }}%</span> <br>
                                     </strong>

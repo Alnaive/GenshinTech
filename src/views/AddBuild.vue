@@ -1,18 +1,162 @@
 <template>
     <div class="flex justify-center">
         <tabs v-model="activeTab" >
+            <tab><h1> New</h1></tab>
             <tab><h1>Default</h1></tab>
-            <tab><h1>New</h1></tab>
         </tabs>
     </div>
     <tab-panels v-model="activeTab" >
         <tab-panel>
+        <h1 class="text-lg mt-1 p-1">Options :</h1>
+        <div class="flex space-x-4">
+            <div class="w-72">
+                <label class="label">
+                    <span class="label-text">Party</span>
+                </label>
+                <vSelect multiple
+                v-model="formData.party_id" 
+                :options="characters" label="name" 
+                :reduce="characters => characters.skillDepotId" 
+                :selectable="() => formData.party_id.length < 3"
+                placeholder="Select Team"
+                >
+                <template v-slot:option="option" >
+                <div class="flex items-center">
+                    <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${option.icon}.png`" class="w-10 h-10" /> 
+                    {{ option.name }}
+                    </div>
+                </template>
+                </vSelect>
+            </div>
+            <div class="form-control w-full max-w-xs">
+            <label class="label">
+                <span class="label-text">Build Name</span>
+                <span class="label-text">Default is Core</span>
+            </label>
+            <input type="text" v-model="formData.status" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+            </div>
+        </div><br>
+            <div  class="overflow-auto md:overflow-hidden rounded-xl" >
+                <div id="newLayout" class="flex ">
+                    <section class="bg-cover" :style="{ backgroundImage: 'url(' + bgElementImg() + ')'}">
+                        <div class="flex flex-nowrap " >
+                            <div class="flex flex-nowrap ">
+                                <div class="card rounded-none w-[414px] h-[550px]">
+                                    <figure class="draggable">
+                                        <img  v-if="!imageUrl" :src="`https://upload-os-bbs.mihoyo.com/game_record/genshin/character_image/${charData.avatar}.png`" >
+                                        <img v-else :src="imageUrl" class="object-cover ">
+                                    </figure> 
+                                    <NewConste :sessionData="sessionData" :charData="charData" :activeTab="activeTab"/>
+                                    <NewTalent :sessionData="sessionData" :charData="charData" :activeTab="activeTab"/> 
+                                    <h1 class="text-lg text-white font-bold absolute right-0 " v-show="!showNickname">{{playerInfo.nickname}}</h1>
+                                    <h1 class="text-md text-white  absolute right-0 top-6 " v-show="!showUid">{{uid}}</h1>
+                                    <h1 class="text-lg text-white font-bold absolute left-3 whitespace-nowrap">{{charData.name}} - {{formData.status}}</h1>
+                                    <h1 class="text-md text-white absolute left-3 top-6 whitespace-nowrap" >Level {{sessionData.propMap[4001]['val']}}/{{(sessionData.propMap[1002]['val'] * 10) + (sessionData.propMap[1002]['val']>0?10:0) + 20}}</h1> 
+                                    <div class="flex items-center space-x-1 absolute left-3 top-12 whitespace-nowrap">
+                                        <img src="/images/svg/Friendship.svg" class="w-6 h-6">
+                                        <h1 class="text-md text-white">{{sessionData.fetterInfo.expLevel}}</h1>
+                                    </div>
+                                    <!-- <p class="text-center p-2">"{{charData.detail}}"</p> -->
+                                        <!-- <li>"constellation": "Grus Nivis",</li> -->
+                                        <!-- <li>"native": "Yashiro Commission",</li> -->
+                                </div>
+                            </div>
+                            <div class="w-[414px] relative mr-2 ml-2">
+                                <NewWeapon :sessionData="sessionData" :itemName="itemName"/>
+                                <div class="flex">
+                                    <div class="avatar" v-if="formData.party_id.length">
+                                        <div class="w-24 rounded-full">
+                                            <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${charData.sideIcon}.png`" class="w-24"/> 
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-row" v-for="data in formData.party_id" :key="data">
+                                        <div class="avatar"  v-for="char in characters" :key="char" >
+                                            <div class="w-24 rounded-full " v-if="data == char.skillDepotId">
+                                                <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${char.sideIcon}.png`"/> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="absolute inset-x-0 bottom-0">
+                                    <section class="px-2 py-2 text-white  " >
+                                        <Stats :sessionData="sessionData" :charData="charData" />
+                                        <div  class="flex space-x-3 " >
+                                            <div class="flex-none ...">
+                                                <div class="flex flex-col " >
+                                                    <div  v-if="formData.two_pcs_art">
+                                                        <div class="font-bold text-md ml-3" v-for="data in formData.two_pcs_art" :key="data">2</div>
+                                                    </div>
+                                                    <div v-if="formData.one_pcs_art">
+                                                        <div class="font-bold text-md  ml-3">3</div>
+                                                    </div>
+                                                    <div v-if="formData.four_pcs_art">
+                                                        <div class="font-bold text-lg ml-3 ">4</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-none ...">
+                                                <div class="flex flex-col">
+                                                    <div  v-if="formData.two_pcs_art">
+                                                        <div v-for="data in formData.two_pcs_art" :key="data" class="font-bold whitespace-nowrap text-md ml-[5.55px]">
+                                                            {{data}}
+                                                        </div>
+                                                    </div>
+                                                    <div v-if="formData.one_pcs_art">
+                                                        <div class="font-bold whitespace-nowrap text-md ml-[5.55px]">{{formData.one_pcs_art}}</div>
+                                                    </div>
+                                                    <div v-if="formData.four_pcs_art">
+                                                        <div class="font-bold whitespace-nowrap text-md ml-[5.55px]">{{formData.four_pcs_art}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        <div class="mt-1 mr-1 z-30">
+                            <div class="space-y-1  mr-2 text-white">
+                                <Flower :sessionData="sessionData"/>
+                                <Plume :sessionData="sessionData"/>
+                                <Sands :sessionData="sessionData"/>
+                                <Goblet :sessionData="sessionData"/>
+                                <Circlet :sessionData="sessionData"/>
+                            </div>
+                        </div>
+                    </div>
+                    </section>
+                </div>
+            </div>
+            <h1 class="text-lg mt-1 p-1">Export Options :</h1>
             <div class="form-control mb-2">
-        <label class="label">
-            <span class=" text-black dark:text-white">Change Avatar</span>
-        </label>
-        <input type="file" @change="onFileChange"/>
-    </div>
+                <label class="label">
+                    <span class=" text-black dark:text-white">Change Avatar</span>
+                </label>
+                <input type="file" @change="onFileChange"/>
+            </div>
+            <div class="flex">
+                <label class="label cursor-pointer space-x-2">
+                    <span class="label-text">Hide UID</span> 
+                    <input type="checkbox" checked="checked" v-model="showUid" class="checkbox" />
+                </label>
+                <label class="label cursor-pointer space-x-2">
+                    <span class="label-text">Hide Nickname</span> 
+                    <input type="checkbox" checked="checked" v-model="showNickname" class="checkbox" />
+                </label>
+            </div>
+        <div class="flex mt-2 space-x-2">
+            <button class="btn vld-parent bg-green-500 text-white hover:bg-green-400" @click.prevent="exportNewImg"><VueFeather type="image" size="24" class="mr-1" ></VueFeather> 
+            <loading v-model:active="isLoading" :is-full-page="fullPage" width="24" height="24"/> Export</button>
+            <button v-if="sessionData.propMap[4001]['val'] > 79" class="btn bg-red-500 hover:bg-red-400 text-white" @click="submit()"><VueFeather type="upload" size="24" class="mr-1" ></VueFeather>Store</button>
+        </div>
+        <div id="canvasNew" class="mt-2 mb-2"></div>
+        </tab-panel>
+        <tab-panel>
+            <div class="form-control mb-2">
+                <label class="label">
+                    <span class=" text-black dark:text-white">Change Avatar</span>
+                </label>
+                <input type="file" @change="onFileChange"/>
+            </div>
         <div class="flex flex-row card shadow-lg overflow-x-auto">
             <ul id="exportData" class="flex flex-row space-x-4 rounded-xl" :style="{ backgroundImage: 'url(' + bgElementImg() + ')',  backgroundRepeat: 'no-repeat'}">
             <li>
@@ -106,145 +250,7 @@
        
 <div id="canvas" class="mt-2 mb-2"></div>
         </tab-panel>
-        <tab-panel>
-            <h1 class="text-lg mt-1 p-1">Options :</h1>
-        <div class="flex space-x-4">
-            <div class="w-72">
-                <label class="label">
-                    <span class="label-text">Party</span>
-                </label>
-                <vSelect multiple
-                v-model="formData.party_id" 
-                :options="characters" label="name" 
-                :reduce="characters => characters.skillDepotId" 
-                :selectable="() => formData.party_id.length < 3"
-                placeholder="Select Team"
-                >
-                <template v-slot:option="option" >
-                <div class="flex items-center">
-                    <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${option.icon}.png`" class="w-10 h-10" /> 
-                    {{ option.name }}
-                    </div>
-                </template>
-                </vSelect>
-            </div>
-            <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Build Name</span>
-                <span class="label-text">Default is Core</span>
-            </label>
-            <input type="text" v-model="formData.status" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-            </div>
-        </div><br>
-            <div  class="overflow-auto md:overflow-hidden rounded-xl" >
-                <div id="newLayout" class="flex ">
-                    <section class="bg-cover" :style="{ backgroundImage: 'url(' + bgElementImg() + ')'}">
-                        <div class="flex flex-nowrap " >
-                            <div class="flex flex-nowrap ">
-                                <div class="card rounded-none w-[414px] h-[550px]">
-                                    <figure class="draggable">
-                                        <img  v-if="!imageUrl" :src="`https://upload-os-bbs.mihoyo.com/game_record/genshin/character_image/${charData.avatar}.png`" >
-                                        <img v-else :src="imageUrl" class="object-cover ">
-                                    </figure> 
-                                    <Conste :sessionData="sessionData" :charData="charData" :activeTab="activeTab"/>
-                                    <NewTalent :sessionData="sessionData" :charData="charData" :activeTab="activeTab"/> 
-                                    <h1 class="text-lg text-white font-bold absolute right-0 " v-show="!showNickname">{{playerInfo.nickname}}</h1>
-                                    <h1 class="text-md text-white  absolute right-0 top-6 " v-show="!showUid">{{uid}}</h1>
-                                    <h1 class="text-lg text-white font-bold absolute left-3 whitespace-nowrap">{{charData.name}} - {{formData.status}}</h1>
-                                    <h1 class="text-md text-white absolute left-3 top-6" >Level {{sessionData.propMap[4001]['val']}}/{{(sessionData.propMap[1002]['val'] * 10) + (sessionData.propMap[1002]['val']>0?10:0) + 20}}</h1> 
-                                    <div class="flex items-center space-x-1 absolute left-3 top-12">
-                                        <img src="/src/assets/images/svg/Friendship.svg" class="w-6 h-6">
-                                        <h1 class="text-md text-white">{{sessionData.fetterInfo.expLevel}}</h1>
-                                    </div>
-                                    <!-- <p class="text-center p-2">"{{charData.detail}}"</p> -->
-                                        <!-- <li>"constellation": "Grus Nivis",</li> -->
-                                        <!-- <li>"native": "Yashiro Commission",</li> -->
-                                </div>
-                            </div>
-                            <div class="w-[414px] relative mr-2 ml-2">
-                                <NewWeapon :sessionData="sessionData" :itemName="itemName"/>
-                                <div class="flex">
-                                    <div class="avatar" v-if="formData.party_id.length">
-                                        <div class="w-24 rounded-full">
-                                            <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${charData.sideIcon}.png`" class="w-24"/> 
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row" v-for="data in formData.party_id" :key="data">
-                                        <div class="avatar"  v-for="char in characters" :key="char" >
-                                            <div class="w-24 rounded-full " v-if="data == char.skillDepotId">
-                                                <img :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${char.sideIcon}.png`"/> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="absolute inset-x-0 bottom-0">
-                                    <section class="px-2 py-2 text-white  " >
-                                        <Stats :sessionData="sessionData" :charData="charData" />
-                                        <div  class="flex space-x-3 " >
-                                            <div class="flex-none ...">
-                                                <div class="flex flex-col " >
-                                                    <div  v-if="formData.two_pcs_art">
-                                                        <div class="font-bold text-md ml-3" v-for="data in formData.two_pcs_art" :key="data">2</div>
-                                                    </div>
-                                                    <div v-if="formData.one_pcs_art">
-                                                        <div class="font-bold text-md  ml-3">3</div>
-                                                    </div>
-                                                    <div v-if="formData.four_pcs_art">
-                                                        <div class="font-bold text-lg ml-3 ">4</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="flex-none ...">
-                                                <div class="flex flex-col">
-                                                    <div  v-if="formData.two_pcs_art">
-                                                        <div v-for="data in formData.two_pcs_art" :key="data" class="font-bold whitespace-nowrap text-md ml-[5.55px]">
-                                                            {{data}}
-                                                        </div>
-                                                    </div>
-                                                    <div v-if="formData.one_pcs_art">
-                                                        <div class="font-bold whitespace-nowrap text-md ml-[5.55px]">{{formData.one_pcs_art}}</div>
-                                                    </div>
-                                                    <div v-if="formData.four_pcs_art">
-                                                        <div class="font-bold whitespace-nowrap text-md ml-[5.55px]">{{formData.four_pcs_art}}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        <div class="mt-1 mr-1 z-30">
-                            <div class="space-y-1  mr-2 text-white">
-                                <Flower :sessionData="sessionData"/>
-                                <Plume :sessionData="sessionData"/>
-                                <Sands :sessionData="sessionData"/>
-                                <Goblet :sessionData="sessionData"/>
-                                <Circlet :sessionData="sessionData"/>
-                            </div>
-                        </div>
-                    </div>
-                    </section>
-                </div>
-            </div>
-            <h1 class="text-lg mt-1 p-1">Export Options :</h1>
-    <div class="flex">
-    <label class="label cursor-pointer space-x-2">
-        <span class="label-text">Hide UID</span> 
-        <input type="checkbox" checked="checked" v-model="showUid" class="checkbox" />
-    </label>
-    <label class="label cursor-pointer space-x-2">
-        <span class="label-text">Hide Nickname</span> 
-        <input type="checkbox" checked="checked" v-model="showNickname" class="checkbox" />
-    </label>
-    </div>
-        <div class="flex mt-2 space-x-2">
-            <button class="btn vld-parent bg-green-500 text-white hover:bg-green-400" @click.prevent="exportNewImg"><VueFeather type="image" size="24" class="mr-1" ></VueFeather> 
-            <loading v-model:active="isLoading" :is-full-page="fullPage" width="24" height="24"/> Export</button>
-            <button v-if="sessionData.propMap[4001]['val'] > 79" class="btn bg-red-500 hover:bg-red-400 text-white" @click="submit()"><VueFeather type="upload" size="24" class="mr-1" ></VueFeather>Store</button>
-        </div>
-        <div id="canvasNew" class="mt-2 mb-2">
-        </div>
-        </tab-panel>
+       
     </tab-panels>
     
 
@@ -260,6 +266,7 @@ import { useRouter, useRoute } from 'vue-router'
 import draggable from '@/components/loc.js';
 import Equip from '@/components/uid/Equip.vue';
 import Conste from '@/components/uid/Conste.vue';
+import NewConste from '@/components/uid/NewConste.vue';
 import Talent from '@/components/uid/Talent.vue';
 import NewTalent from '@/components/uid/NewTalent.vue';
 import Stats from '@/components/uid/Stats.vue';
@@ -440,11 +447,15 @@ import "vue-select/dist/vue-select.css";
         function exportNewImg(){
             isLoading.value = true
             setTimeout(() => {
-                isLoading.value = false
-                var node = document.getElementById("newLayout");
+            isLoading.value = false
+            var node = document.getElementById("newLayout");
             var node1 = document.getElementById("canvasNew");
+             var options = {
+                quality: 0.99,
+                height: node.clientHeight,
+            };
             domtoimage
-            .toPng(node)
+            .toPng(node, options)
             .then(function (dataUrl) {
                 var img = new Image();
                 img.src = dataUrl;
@@ -458,21 +469,21 @@ import "vue-select/dist/vue-select.css";
         function bgElementImg(){
             const ele = props.charData.element;
                 if(ele == "Ice"){
-                    return "/src/assets/images/element/bgCryo.jpg"
+                    return "/images/element/bgCryo.jpg"
                 } else if(ele == "Rock"){
-                    return "/src/assets/images/element/bgGeo.jpg"
+                    return "/images/element/bgGeo.jpg"
                 } else if(ele == "Dendro"){
-                    return "/src/assets/images/element/bgDendro.jpg"
+                    return "/images/element/bgDendro.jpg"
                 } else if(ele == "Wind"){
-                    return "/src/assets/images/element/bgAnemo.jpg"
+                    return "/images/element/bgAnemo.jpg"
                 } else if(ele == "Electric"){
-                    return "/src/assets/images/element/bgElectro.jpg"
+                    return "/images/element/bgElectro.jpg"
                 } else if(ele == "Water"){
-                    return "/src/assets/images/element/bgHydro.jpg"
+                    return "/images/element/bgHydro.jpg"
                 } else if(ele == "Fire"){
-                    return "/src/assets/images/element/bgPyro.jpg"
+                    return "/images/element/bgPyro.jpg"
                 } else {
-                    return "/src/assets/images/element/bgDendro.jpg"
+                    return "/images/element/bgDendro.jpg"
                 }
             }
     function onFileChange(e) {

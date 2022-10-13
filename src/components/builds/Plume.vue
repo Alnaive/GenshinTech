@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[440px] h-[105px] card-side flex items-center space-x-4 p-2">
+    <div class="rounded-lg bg-gray-900 bg-opacity-30 w-[460px] md:w-[440px] h-[105px] card-side flex items-center space-x-4 p-2">
         <figure class="relative">
         <img class="w-24 h-24" :src="`https://res.cloudinary.com/genshin/image/upload/sprites/${build.equipList[1].flat.icon}.png`" alt="" srcset="">
          <div v-if="build.equipList[1].flat.rankLevel == 5" class="absolute inset-x-0 bottom-[-35px] flex flex-row items-center">
@@ -17,12 +17,12 @@
         </div>
         </figure>
         <div class="divider divider-horizontal w-0"></div>
-        <div class="w-[95px]">
+        <div class="flex flex-col w-[95px]">
             <h1 class="font-bold">ATK</h1>
             <pre class="text-xl">{{build.equipList[1].flat.reliquaryMainstat.statValue}}</pre> 
             <span class="badge"><pre>+{{build.equipList[1].reliquary.level - 1}}</pre></span> 
         </div>
-        <div class="">
+        <div class="flex">
             <ul>
             <li>
                 <pre v-if="build.equipList[1].flat.reliquarySubstats[0].appendPropId == 'FIGHT_PROP_ATTACK_PERCENT'">ATK+{{build.equipList[1].flat.reliquarySubstats[0].statValue}}%</pre>
